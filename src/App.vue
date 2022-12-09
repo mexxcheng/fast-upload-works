@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <a-layout id="app">
+    <UserHeader />
+    <router-view></router-view>
+    <a-spin id="spin" size="large" tip="Loading..." :spinning="!reqDone" :style="{display:reqDone?'none':'flex'}"/>
+  </a-layout>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapState } from 'vuex';
+import UserHeader from '@/components/UserHeader';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    UserHeader,
+  },
+  computed: {
+    ...mapState(['reqDone']),
+  },
+  mounted(){
+    console.log(this.$route);
+    console.log(this.$store);
   }
 }
 </script>
 
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#spin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: 0;
+  right: 0;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  opacity: .5;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }
 </style>
